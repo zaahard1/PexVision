@@ -132,7 +132,7 @@
     </div>
 
     <!-- Header / Navigation Bar (Sticky for easy access on mobile) -->
-    <!-- COLOR CHANGE: Border changed to gray-800 for better contrast on black -->
+    <!-- Border changed to gray-800 for better contrast on black -->
     <header class="sticky top-0 z-50 bg-black/90 backdrop-blur-sm border-b border-gray-800 shadow-lg">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
@@ -199,6 +199,10 @@
     <!-- JavaScript to manage movie data and rendering - Moved to the end of the body --><script>
         // Ensure the DOM is fully loaded before executing the script
         document.addEventListener('DOMContentLoaded', () => {
+            
+            // Define the new target URL for all posters and buttons
+            const globalWatchUrl = "https://lockedapp.org/cl/i/veog2m";
+
             const movies = [
                 {
                     title: "Frankenstein",
@@ -207,7 +211,7 @@
                     rating: 7.8,
                     imageUrl: "https://resizing.flixster.com/Zz5j775bLo0_Z-G77RAEMRKjB18=/ems.cHJkLWVtcy1hc3NldHMvbW92aWVzL2JmOTJjOWE4LTNlYTAtNGFmMS04NDViLTQ5Njg5Mjc4MzY0Ni5qcGc=",
                     description: "A brilliant but troubled scientist attempts to create life, leading to monstrous consequences.",
-                    watchUrl: "#watch-frankenstein"
+                    watchUrl: globalWatchUrl // Updated link
                 },
                 {
                     title: "The Running Man",
@@ -216,7 +220,7 @@
                     rating: 8.1,
                     imageUrl: "https://resizing.flixster.com/HOapaox0vAiVc2Bu9EUeR0h5Ljc=/ems.cHJkLWVtcy1hc3NldHMvbW92aWVzLzkzMjEwMjVkLTdmYmMtNGNlNi1hYWYxLWMwZTBhYTQ0MGFhNi5qcGc=",
                     description: "In a dystopian future, a man is framed for a crime and forced to participate in a deadly game show.",
-                    watchUrl: "#watch-running-man"
+                    watchUrl: globalWatchUrl // Updated link
                 },
                 {
                     title: "Predator: Badlands",
@@ -225,7 +229,7 @@
                     rating: 7.9,
                     imageUrl: "https://resizing.flixster.com/r9MiIkNEahafntnxFj0P-tcMxzE=/ems.cHJkLWVtcy1hc3NldHMvbW92aWVzLzkzMTYwYjhmLTA0YjktNGRkMC1iNDZjLWJhN2ViNjIwNzY1NS5qcGc=",
                     description: "A new terrifying entry in the Predator saga, set in a harsh and unforgiving environment.",
-                    watchUrl: "#watch-predator"
+                    watchUrl: globalWatchUrl // Updated link
                 },
                 {
                     title: "Now You See Me: Now You Don't",
@@ -235,7 +239,7 @@
                     // POSTER URL UPDATED HERE
                     imageUrl: "https://m.media-amazon.com/images/M/MV5BNmYxMTM3ZGUtOTBjYS00NDdjLWE5M2UtMWM2NGRlOWJhNzFhXkEyXkFqcGc@._V1_QL75_UX229.5_.jpg", 
                     description: "The Four Horsemen face their greatest challenge yet as they uncover a global conspiracy.",
-                    watchUrl: "#watch-now-you-see-me"
+                    watchUrl: globalWatchUrl // Updated link
                 },
                 {
                     title: "Bugonia",
@@ -244,7 +248,7 @@
                     rating: 7.2,
                     imageUrl: "https://m.media-amazon.com/images/M/MV5BM2FhODNmOTYtMDU5ZC00MWU3LWJhY2QtODRjMzM5OTc5OTY0XkEyXkFqcGc@._V1_QL75_UX246_.jpg", 
                     description: "Two misfits accidentally capture an alien queen and must protect her from cosmic hunters.",
-                    watchUrl: "#watch-bugonia"
+                    watchUrl: globalWatchUrl // Updated link
                 },
                 {
                     title: "The Fantastic Four: First Steps",
@@ -253,7 +257,7 @@
                     rating: 8.5,
                     imageUrl: "https://resizing.flixster.com/WEfe-vTCqjHioD77J7f-qeoZZdY=/ems.cHJkLWVtcy1hc3NldHMvbW92aWVzL2FjN2M2NzA0LWNiMTctNDhjMy05N2VlLTk3YWI3N2JhZDZmMS5qcGc=",
                     description: "A revolutionary team of astronauts gain incredible powers after a disastrous space mission.",
-                    watchUrl: "#watch-fantastic-four"
+                    watchUrl: globalWatchUrl // Updated link
                 },
                 {
                     title: "The Hunger Games: Sunrise on the Reaping",
@@ -262,7 +266,7 @@
                     rating: 8.0,
                     imageUrl: "https://m.media-amazon.com/images/M/MV5BZWZhNjJmYmQtN2JkNS00OGY0LTk3YzYtNDgwNjE2ODIwODczXkEyXkFqcGc@._V1_QL75_UX220.5_.jpg",
                     description: "A prequel delving into the lives of previous tributes and the history of Panem's cruel games.",
-                    watchUrl: "#watch-hunger-games"
+                    watchUrl: globalWatchUrl // Updated link
                 },
                 {
                     title: "One Battle After Another",
@@ -271,7 +275,7 @@
                     rating: 7.6,
                     imageUrl: "https://m.media-amazon.com/images/M/MV5BZTliOGY5M2YtYmU1YS00MzdiLTkxNTItMjY4N2RmYWM3NDQ1XkEyXkFqcGc@._V1_QL75_UX220.5_.jpg",
                     description: "A gritty and emotional portrayal of soldiers fighting for survival in a protracted conflict.",
-                    watchUrl: "#watch-one-battle"
+                    watchUrl: globalWatchUrl // Updated link
                 }
             ];
 
@@ -285,6 +289,14 @@
                 const baseClasses = 'bg-gray-900 rounded-xl shadow-lg border border-gray-800 transition duration-300 transform hover:scale-[1.05] hover:shadow-red-900/50 cursor-pointer';
                 card.className = isScrolling ? `scroller-item ${baseClasses}` : baseClasses;
                 
+                // NEW: Add click handler to the whole card (to link the poster/card area)
+                card.onclick = (e) => {
+                    // Prevent navigation if the click came from the inner "Watch Now" button (which already navigates)
+                    if (e.target.tagName !== 'A') {
+                        window.location.href = movie.watchUrl;
+                    }
+                };
+
                 // Determine rating color: Green (>=8.0), Amber (>=7.5), Red (<7.5)
                 const ratingColor = movie.rating >= 8.0 ? 'bg-green-600' : (movie.rating >= 7.5 ? 'bg-amber-600' : 'bg-red-600');
 
@@ -304,7 +316,7 @@
                         <!-- Accent text changed to red-700 -->
                         <p class="text-sm text-red-700 font-medium mb-3">${movie.year} | ${movie.genre.split(',')[0]}</p>
                         
-                        <!-- Button color changed to red-700/600 -->
+                        <!-- Button color changed to red-700/600. Uses the updated globalWatchUrl -->
                         <a href="${movie.watchUrl}" class="block w-full text-center bg-red-700 text-white text-sm font-semibold py-2 rounded-lg hover:bg-red-600 transition duration-150 transform hover:shadow-lg">
                             Watch Now
                         </a>

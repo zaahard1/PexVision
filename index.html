@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PexVision - Upcoming Blockbusters</title>
+    <!-- Load Tailwind CSS --><script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        /* Custom Scrollbar for a Dark Theme */
+        ::-webkit-scrollbar {
+            height: 8px;
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #000000; /* pure black */
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #4b5563; /* Gray-600 */
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #6b7280; /* Gray-500 */
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* Specific style to ensure movie posters have a consistent height/ratio (3:2) */
+        .poster-container {
+            aspect-ratio: 2 / 3; 
+            width: 100%;
+            overflow: hidden;
+        }
+        .poster-container img {
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+        }
+        
+        /* ------------------------------------ */
+        /* CSS for Professional Background Text */
+        /* ------------------------------------ */
+        #background-text {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -10; /* Ensure it stays behind all content */
+            overflow: hidden;
+            pointer-events: none;
+            line-height: 1.0;
+            opacity: 0.03; /* Very subtle opacity */
+            color: #1f2937; /* Gray-800 */
+            font-size: 8rem; /* Large text */
+            font-weight: 900;
+            transform: rotate(-10deg); /* Tilt the text for an abstract look */
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+        }
+        #background-text span {
+            white-space: nowrap;
+            user-select: none;
+            display: block;
+        }
+        
+        /* ------------------------------------ */
+        /* CSS for Infinite Scrolling Carousel */
+        /* ------------------------------------ */
+        .scroller {
+            overflow: hidden; 
+            white-space: nowrap; 
+            /* Add fade effect on the sides (Updated background color for mask) */
+            -webkit-mask: linear-gradient(90deg, transparent, white 5%, white 95%, transparent);
+            mask: linear-gradient(90deg, transparent, white 5%, white 95%, transparent);
+            padding: 2rem 0; 
+        }
+
+        .scroller-inner {
+            display: inline-flex;
+            animation: scroll 40s linear infinite; 
+        }
+        
+        /* Pause animation on hover */
+        .scroller-inner:hover {
+            animation-play-state: paused;
+        }
+
+        /* Define the scrolling animation */
+        @keyframes scroll {
+            from { transform: translateX(0); }
+            to { transform: translateX(-50%); } 
+        }
+        
+        /* Style for the individual movie card items inside the scroller */
+        .scroller-item {
+            width: 45vw; 
+            max-width: 250px; 
+            margin-right: 1.5rem; 
+            flex-shrink: 0; 
+        }
+        
+        /* Tablet/Small Desktop adjustment */
+        @media (min-width: 640px) { /* sm: breakpoint */
+             .scroller-item {
+                 width: 30vw; 
+                 max-width: 280px;
+             }
+        }
+        
+        /* Desktop adjustment */
+        @media (min-width: 1024px) { /* lg: breakpoint */
+             .scroller-item {
+                 width: 20vw; 
+                 max-width: 300px;
+             }
+        }
+    </style>
+</head>
+
+<body class="bg-black text-gray-100 min-h-screen">
+
+    <!-- Professional Background Text Overlay -->
+    <div id="background-text" aria-hidden="true">
+        <span>PexVision PexVision PexVision PexVision PexVision PexVision</span>
+        <span>PexVision PexVision PexVision PexVision PexVision PexVision</span>
+        <span>PexVision PexVision PexVision PexVision PexVision PexVision</span>
+        <span>PexVision PexVision PexVision PexVision PexVision PexVision</span>
+        <span>PexVision PexVision PexVision PexVision PexVision PexVision</span>
+    </div>
+
+    <!-- Header / Navigation Bar (Sticky for easy access on mobile) -->
+    <!-- COLOR CHANGE: Border changed to gray-800 for better contrast on black -->
+    <header class="sticky top-0 z-50 bg-black/90 backdrop-blur-sm border-b border-gray-800 shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex-shrink-0">
+                    <!-- Logo accent changed to red-700 -->
+                    <a href="#" class="text-3xl font-extrabold text-red-700 tracking-wide">
+                        Pex<span class="text-gray-100">Vision</span>
+                    </a>
+                </div>
+                <!-- Desktop Nav Links -->
+                <nav class="hidden md:flex items-center space-x-6">
+                    <!-- Hover text changed to red-700 -->
+                    <a href="#" class="text-gray-300 hover:text-red-700 font-medium transition duration-150">Home</a>
+                    <a href="#featured-releases" class="text-gray-300 hover:text-red-700 font-medium transition duration-150">Releases</a>
+                    <a href="#all-movies" class="text-gray-300 hover:text-red-700 font-medium transition duration-150">Catalog</a>
+                    <!-- Sign In button changed to red-700/600 -->
+                    <a href="#" class="bg-red-700 text-white px-4 py-2 rounded-full text-sm font-bold shadow-md shadow-red-900/50 hover:bg-red-600 transition duration-300">Sign In</a>
+                </nav>
+                <!-- Mobile Sign In Button -->
+                <!-- Mobile button changed to red-700/600 -->
+                <a href="#" class="md:hidden bg-red-700 text-white px-3 py-1.5 rounded-full text-sm font-semibold hover:bg-red-600 transition duration-300">
+                    Account
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto py-4">
+
+        <!-- Featured Movie Scroller (Now at the top) -->
+        <section id="featured-releases" class="pt-2 pb-10">
+            <!-- Section title changed to red-700 -->
+            <h2 class="text-3xl font-extrabold mb-8 text-center text-red-700 border-b border-gray-700 pb-4 mx-4 sm:mx-6 lg:mx-8">
+                Featured 2025 Releases (Scrolling)
+            </h2>
+            
+            <!-- Movie Scroller Container --><div class="scroller">
+                <!-- Inner container where movies will be duplicated and scroll infinitely --><div id="scrolling-movie-grid" class="scroller-inner">
+                    <!-- Movie cards will be inserted here by JavaScript --></div>
+            </div>
+        </section>
+        
+        <!-- PexVision Full Catalog (New Static Grid Section) -->
+        <section id="all-movies" class="px-4 sm:px-6 lg:px-8 pt-10 pb-12">
+            <!-- Section title changed to red-700 -->
+            <h2 class="text-3xl font-extrabold mb-8 text-center text-red-700 border-b border-gray-700 pb-4">
+                PexVision Catalog
+            </h2>
+            
+            <!-- Static Grid Container --><div id="static-movie-grid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 sm:gap-8">
+                <!-- Static movie cards will be inserted here by JavaScript --></div>
+        </section>
+        
+    </main>
+
+    <!-- Footer -->
+    <footer class="mt-16 border-t border-gray-800 bg-gray-900 py-6">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-gray-500 text-sm">
+            <p>&copy; 2025 PexVision. All rights reserved. Cinematic data for reference only.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript to manage movie data and rendering - Moved to the end of the body --><script>
+        // Ensure the DOM is fully loaded before executing the script
+        document.addEventListener('DOMContentLoaded', () => {
+            const movies = [
+                {
+                    title: "Frankenstein",
+                    year: 2025,
+                    genre: "Horror, Sci-Fi",
+                    rating: 7.8,
+                    imageUrl: "https://resizing.flixster.com/Zz5j775bLo0_Z-G77RAEMRKjB18=/ems.cHJkLWVtcy1hc3NldHMvbW92aWVzL2JmOTJjOWE4LTNlYTAtNGFmMS04NDViLTQ5Njg5Mjc4MzY0Ni5qcGc=",
+                    description: "A brilliant but troubled scientist attempts to create life, leading to monstrous consequences.",
+                    watchUrl: "#watch-frankenstein"
+                },
+                {
+                    title: "The Running Man",
+                    year: 2025,
+                    genre: "Action, Sci-Fi",
+                    rating: 8.1,
+                    imageUrl: "https://resizing.flixster.com/HOapaox0vAiVc2Bu9EUeR0h5Ljc=/ems.cHJkLWVtcy1hc3NldHMvbW92aWVzLzkzMjEwMjVkLTdmYmMtNGNlNi1hYWYxLWMwZTBhYTQ0MGFhNi5qcGc=",
+                    description: "In a dystopian future, a man is framed for a crime and forced to participate in a deadly game show.",
+                    watchUrl: "#watch-running-man"
+                },
+                {
+                    title: "Predator: Badlands",
+                    year: 2025,
+                    genre: "Action, Horror",
+                    rating: 7.9,
+                    imageUrl: "https://resizing.flixster.com/r9MiIkNEahafntnxFj0P-tcMxzE=/ems.cHJkLWVtcy1hc3NldHMvbW92aWVzLzkzMTYwYjhmLTA0YjktNGRkMC1iNDZjLWJhN2ViNjIwNzY1NS5qcGc=",
+                    description: "A new terrifying entry in the Predator saga, set in a harsh and unforgiving environment.",
+                    watchUrl: "#watch-predator"
+                },
+                {
+                    title: "Now You See Me: Now You Don't",
+                    year: 2025,
+                    genre: "Crime, Thriller",
+                    rating: 7.5,
+                    // POSTER URL UPDATED HERE
+                    imageUrl: "https://m.media-amazon.com/images/M/MV5BNmYxMTM3ZGUtOTBjYS00NDdjLWE5M2UtMWM2NGRlOWJhNzFhXkEyXkFqcGc@._V1_QL75_UX229.5_.jpg", 
+                    description: "The Four Horsemen face their greatest challenge yet as they uncover a global conspiracy.",
+                    watchUrl: "#watch-now-you-see-me"
+                },
+                {
+                    title: "Bugonia",
+                    year: 2025,
+                    genre: "Comedy, Sci-Fi",
+                    rating: 7.2,
+                    imageUrl: "https://m.media-amazon.com/images/M/MV5BM2FhODNmOTYtMDU5ZC00MWU3LWJhY2QtODRjMzM5OTc5OTY0XkEyXkFqcGc@._V1_QL75_UX246_.jpg", 
+                    description: "Two misfits accidentally capture an alien queen and must protect her from cosmic hunters.",
+                    watchUrl: "#watch-bugonia"
+                },
+                {
+                    title: "The Fantastic Four: First Steps",
+                    year: 2025,
+                    genre: "Sci-Fi, Action",
+                    rating: 8.5,
+                    imageUrl: "https://resizing.flixster.com/WEfe-vTCqjHioD77J7f-qeoZZdY=/ems.cHJkLWVtcy1hc3NldHMvbW92aWVzL2FjN2M2NzA0LWNiMTctNDhjMy05N2VlLTk3YWI3N2JhZDZmMS5qcGc=",
+                    description: "A revolutionary team of astronauts gain incredible powers after a disastrous space mission.",
+                    watchUrl: "#watch-fantastic-four"
+                },
+                {
+                    title: "The Hunger Games: Sunrise on the Reaping",
+                    year: 2025,
+                    genre: "Adventure, Sci-Fi",
+                    rating: 8.0,
+                    imageUrl: "https://m.media-amazon.com/images/M/MV5BZWZhNjJmYmQtN2JkNS00OGY0LTk3YzYtNDgwNjE2ODIwODczXkEyXkFqcGc@._V1_QL75_UX220.5_.jpg",
+                    description: "A prequel delving into the lives of previous tributes and the history of Panem's cruel games.",
+                    watchUrl: "#watch-hunger-games"
+                },
+                {
+                    title: "One Battle After Another",
+                    year: 2025,
+                    genre: "War, Drama",
+                    rating: 7.6,
+                    imageUrl: "https://m.media-amazon.com/images/M/MV5BZTliOGY5M2YtYmU1YS00MzdiLTkxNTItMjY4N2RmYWM3NDQ1XkEyXkFqcGc@._V1_QL75_UX220.5_.jpg",
+                    description: "A gritty and emotional portrayal of soldiers fighting for survival in a protracted conflict.",
+                    watchUrl: "#watch-one-battle"
+                }
+            ];
+
+            const scrollingGrid = document.getElementById('scrolling-movie-grid');
+            const staticGrid = document.getElementById('static-movie-grid');
+
+            // Function to create a movie card element (reused for both sections)
+            function createMovieCard(movie, isScrolling = false) {
+                const card = document.createElement('div');
+                // Hover shadow changed to red-900/50 for a dark effect
+                const baseClasses = 'bg-gray-900 rounded-xl shadow-lg border border-gray-800 transition duration-300 transform hover:scale-[1.05] hover:shadow-red-900/50 cursor-pointer';
+                card.className = isScrolling ? `scroller-item ${baseClasses}` : baseClasses;
+                
+                // Determine rating color: Green (>=8.0), Amber (>=7.5), Red (<7.5)
+                const ratingColor = movie.rating >= 8.0 ? 'bg-green-600' : (movie.rating >= 7.5 ? 'bg-amber-600' : 'bg-red-600');
+
+                card.innerHTML = `
+                    <div class="relative poster-container">
+                        <!-- Movie Poster with Error Fallback --><img src="${movie.imageUrl}" 
+                            alt="${movie.title} Poster" 
+                            class="transition duration-500 hover:opacity-90"
+                            onerror="this.onerror=null; this.src='https://placehold.co/180x270/000000/ffffff?text=${encodeURIComponent(movie.title)}%20Poster%20Error'; this.classList.remove('transition'); this.classList.add('p-4', 'object-contain');">
+                        
+                        <!-- Rating Badge --><span class="absolute top-2 right-2 ${ratingColor} text-white text-xs font-bold px-2 py-1 rounded-full shadow-md">
+                            ★ ${movie.rating}
+                        </span>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="text-lg font-bold mb-1 truncate text-white">${movie.title}</h3>
+                        <!-- Accent text changed to red-700 -->
+                        <p class="text-sm text-red-700 font-medium mb-3">${movie.year} | ${movie.genre.split(',')[0]}</p>
+                        
+                        <!-- Button color changed to red-700/600 -->
+                        <a href="${movie.watchUrl}" class="block w-full text-center bg-red-700 text-white text-sm font-semibold py-2 rounded-lg hover:bg-red-600 transition duration-150 transform hover:shadow-lg">
+                            Watch Now
+                        </a>
+                    </div>
+                `;
+                return card;
+            }
+
+            if (scrollingGrid) {
+                // 1. Render SCROLLING Grid (Duplicated movies)
+                const allMovies = [...movies, ...movies]; 
+                allMovies.forEach(movie => {
+                    scrollingGrid.appendChild(createMovieCard(movie, true)); // Pass true to use scrolling classes
+                });
+            } else {
+                console.error("Error: Could not find the scrolling-movie-grid element.");
+            }
+
+            if (staticGrid) {
+                // 2. Render STATIC Grid (Original 8 movies)
+                movies.forEach(movie => {
+                    staticGrid.appendChild(createMovieCard(movie, false)); // Pass false for static card rendering
+                });
+            } else {
+                 console.error("Error: Could not find the static-movie-grid element.");
+            }
+        });
+    </script>
+</body>
+</html>
